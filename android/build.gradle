@@ -1,0 +1,40 @@
+buildscript {
+    ext.kotlin_version = '2.1.0' // Ensure this matches your Kotlin version
+    repositories {
+        google() // Google's Maven repository
+        mavenCentral() // Maven Central repository
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.3.0' // Use a valid AGP version
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    ext {
+        compileSdkVersion   = 34                // or higher / as desired
+        targetSdkVersion    = 34                // or higher / as desired
+        minSdkVersion       = 21                // Required minimum
+        appCompatVersion    = "1.4.2"           // or higher / as desired
+        playServicesLocationVersion = "21.0.1"  // or higher / as desired
+        // kotlin_version = '1.8.10'
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

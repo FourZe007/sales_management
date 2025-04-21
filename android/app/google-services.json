@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113548566731",
+    "project_id": "sales-management-9854a",
+    "storage_bucket": "sales-management-9854a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113548566731:android:82390bc6d752667013bb4e",
+        "android_client_info": {
+          "package_name": "com.meteor.sales_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113548566731-6g7koja2n8p956aljif7m80su7s9ohap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meteor.sales_management",
+            "certificate_hash": "24f949143aca832bcee53b35d8161eec2627fa63"
+          }
+        },
+        {
+          "client_id": "113548566731-dc8qbuimt4nhst131fkr5crapd8acs5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.meteor.sales_management",
+            "certificate_hash": "83bc6c1a9f5c68a5f015e7f4fbdb7cb63b997b7f"
+          }
+        },
+        {
+          "client_id": "113548566731-uuestgj6icqudd2dvhmpq8sjkmtsahk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlks-urCLln0VzsAfij5moFBItLAGXyqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113548566731-uuestgj6icqudd2dvhmpq8sjkmtsahk7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
