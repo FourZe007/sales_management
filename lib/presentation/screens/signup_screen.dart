@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sales_management/static/color.dart';
-import 'package:sales_management/static/font.dart';
-import 'package:sales_management/widget/template/custom_textformfield.dart';
+import 'package:sales_management/core/constants/color.dart';
+import 'package:sales_management/core/constants/font.dart';
+import 'package:sales_management/presentation/widgets/custom_textformfield.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -15,7 +15,6 @@ class SignUpScreen extends StatefulWidget {
 class _SigUupScreenState extends State<SignUpScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -58,7 +57,7 @@ class _SigUupScreenState extends State<SignUpScreen> {
             // ~:Page Image:~
             Expanded(
               child: Image(
-                image: AssetImage('lib/assets/sign-up.png'),
+                image: AssetImage('assets/images/sign-up.png'),
                 width: MediaQuery.of(context).size.width * 0.75,
               ),
             ),
@@ -80,12 +79,12 @@ class _SigUupScreenState extends State<SignUpScreen> {
                         crossAxisAlignment: WrapCrossAlignment.start,
                         children: [
                           // ~:Title:~
-                          Text('Registration', style: FontStyle.titleRB),
+                          Text('Registration', style: TextFontStyle.titleRB),
 
                           // ~:Subtitle:~
                           Text(
                             'Please create a new account to continue.',
-                            style: FontStyle.subtitleRB,
+                            style: TextFontStyle.subtitleRB,
                           ),
                         ],
                       ),
@@ -147,7 +146,10 @@ class _SigUupScreenState extends State<SignUpScreen> {
                               ),
                             ],
                           ),
-                          child: Text('Sign Up', style: FontStyle.subtitleRB),
+                          child: Text(
+                            'Sign Up',
+                            style: TextFontStyle.subtitleRB,
+                          ),
                         ),
                       ),
                     ),
@@ -165,12 +167,15 @@ class _SigUupScreenState extends State<SignUpScreen> {
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.center,
                 children: [
-                  Text('Already have an account?', style: FontStyle.moreText),
+                  Text(
+                    'Already have an account?',
+                    style: TextFontStyle.moreText,
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, '/login');
                     },
-                    child: Text('Login', style: FontStyle.textButton),
+                    child: Text('Login', style: TextFontStyle.textButton),
                   ),
                 ],
               ),

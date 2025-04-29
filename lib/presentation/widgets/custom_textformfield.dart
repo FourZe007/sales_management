@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sales_management/static/font.dart';
-import 'package:sales_management/static/formatter.dart';
+import 'package:sales_management/core/constants/font.dart';
+import 'package:sales_management/core/constants/formatter.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField(
@@ -78,14 +78,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           controller: controller,
           enabled: true,
           obscureText: widget.isPassword,
-          style: FontStyle.textfieldPlaceholder,
+          style: TextFontStyle.textfieldPlaceholder,
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white54,
             contentPadding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.02,
             ),
-            hintStyle: FontStyle.textfieldPlaceholder,
+            hintStyle: TextFontStyle.textfieldPlaceholder,
             hintText: 'Enter ${widget.hintText}',
             labelText: widget.labelText,
             border: const OutlineInputBorder(

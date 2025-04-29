@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sales_management/data/management.dart';
-import 'package:sales_management/widget/presentation/home_screen.dart';
-import 'package:sales_management/widget/presentation/login_screen.dart';
-import 'package:sales_management/widget/presentation/signup_screen.dart';
-import 'package:sales_management/widget/presentation/splash_screen.dart';
-import 'package:sales_management/widget/presentation/welcome_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sales_management/presentation/screens/home_screen.dart';
+import 'package:sales_management/presentation/screens/login_screen.dart';
+import 'package:sales_management/presentation/screens/signup_screen.dart';
+import 'package:sales_management/presentation/screens/splash_screen.dart';
+import 'package:sales_management/presentation/screens/welcome_screen.dart';
+import 'package:sales_management/presentation/state_management/carousel/carousel_bloc.dart';
+import 'package:sales_management/presentation/state_management/google/google_bloc.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -18,12 +19,13 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => Management(),
-      child: const MainApp(),
-    ),
-  );
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (context) => StateManager(),
+  //     child: const MainApp(),
+  //   ),
+  // );
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -35,18 +37,24 @@ class MainApp extends StatelessWidget {
       data: MediaQuery.of(
         context,
       ).copyWith(textScaler: const TextScaler.linear(1.0)),
-      child: MaterialApp(
-        title: 'Sales Management',
-        scrollBehavior: MyCustomScrollBehavior(),
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        home: const SplashScreen(),
-        routes: {
-          '/login': (context) => const LoginScreen(),
-          '/signup': (context) => const SignUpScreen(),
-          '/welcome': (context) => const WelcomeScreen(),
-          '/home': (context) => const HomeScreen(),
-        },
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<CarouselBloc>(create: (context) => CarouselBloc()),
+          BlocProvider<GoogleBloc>(create: (context) => GoogleBloc()),
+        ],
+        child: MaterialApp(
+          title: 'Sales Management',
+          scrollBehavior: MyCustomScrollBehavior(),
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          home: const SplashScreen(),
+          routes: {
+            '/login': (context) => const LoginScreen(),
+            '/signup': (context) => const SignUpScreen(),
+            '/welcome': (context) => const WelcomeScreen(),
+            '/home': (context) => const HomeScreen(),
+          },
+        ),
       ),
     );
   }

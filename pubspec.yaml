@@ -1,6 +1,6 @@
 name: sales_management
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -8,12 +8,15 @@ environment:
 
 dependencies:
   cloud_firestore: ^5.6.6
+  equatable: ^2.0.7
   firebase_auth: ^5.5.2
   firebase_core: ^3.13.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.0
   google_sign_in: ^6.3.0
   provider: ^6.1.4
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -23,4 +26,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - lib/assets/
+    - assets/images/
+    - assets/json/

@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sales_management/auth/google.dart';
-import 'package:sales_management/static/color.dart';
-import 'package:sales_management/static/font.dart';
-import 'package:sales_management/widget/template/custom_textformfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sales_management/core/constants/color.dart';
+import 'package:sales_management/core/constants/font.dart';
+import 'package:sales_management/presentation/state_management/google/google_bloc.dart';
+import 'package:sales_management/presentation/state_management/google/google_event.dart';
+import 'package:sales_management/presentation/state_management/google/google_state.dart';
+import 'package:sales_management/presentation/widgets/custom_textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,8 +19,39 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
 
+  // void googleSignIn(StateManager state) async {
+  //   await GAuth.signIn().then((value) async {
+  //     if (value != null) {
+  //       log('Email: ${value.email}');
+  //       log('Display Name: ${value.displayName}');
+  //       log('Phone Number: ${value.phoneNumber}');
+  //
+  //       final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //       prefs.setString('uid', value.uid);
+  //       await GAuth.saveGoogleCredentials(value);
+  //
+  //       state.setUser(
+  //         UserModel(
+  //           uid: value.uid,
+  //           name: value.displayName!,
+  //           email: value.email!,
+  //           phone: value.phoneNumber ?? '',
+  //           createdAt: DateTime.now(),
+  //           lastLogin: DateTime.now(),
+  //         ),
+  //       );
+  //
+  //       if (mounted) Navigator.pushReplacementNamed(context, '/home');
+  //     } else {
+  //       log('Error signing in with Google');
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
+    // final state = Provider.of<StateManager>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -56,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // ~:Page Image:~
             Expanded(
               child: Image(
-                image: AssetImage('lib/assets/login.png'),
+                image: AssetImage('assets/images/login.png'),
                 width: MediaQuery.of(context).size.width * 0.75,
               ),
             ),
@@ -79,12 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: WrapCrossAlignment.start,
                         children: [
                           // ~:Title:~
-                          Text('Login', style: FontStyle.titleRB),
+                          Text('Login', style: TextFontStyle.titleRB),
 
                           // ~:Subtitle:~
                           Text(
                             'Please sign in to continue.',
-                            style: FontStyle.subtitleRB,
+                            style: TextFontStyle.subtitleRB,
                           ),
                         ],
                       ),
@@ -139,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         margin: EdgeInsets.only(bottom: 10),
-                        child: Text('Sign In', style: FontStyle.subtitleRB),
+                        child: Text('Sign In', style: TextFontStyle.subtitleRB),
                       ),
                     ),
                   ],
@@ -159,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Divider(color: Colors.grey),
                     ),
                   ),
-                  Text('Or', style: FontStyle.moreText),
+                  Text('Or', style: TextFontStyle.moreText),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 25, left: 10),
@@ -171,52 +205,64 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             // ~:Alt Login Option:~
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorsLibrary.shadowColor,
-                    blurRadius: 5,
-                    blurStyle: BlurStyle.normal,
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: GestureDetector(
-                onTap: () async {
-                  await GoogleAuth().signIn().then((value) {
-                    if (value != null) {
-                      print('Email: ${value.email}');
-                      print('Display Name: ${value.displayName}');
-                      print('Phone Number: ${value.phoneNumber}');
-                      if (context.mounted) {
-                        Navigator.pushReplacementNamed(context, '/home');
-                      }
-                    } else {
-                      print('Error signing in with Google');
-                    }
-                  });
-                },
-                child: Wrap(
-                  spacing: 5,
-                  direction: Axis.horizontal,
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Image.asset(
-                      'lib/assets/google.png',
-                      fit: BoxFit.contain,
-                      width: MediaQuery.of(context).size.width * 0.08,
+            BlocConsumer<GoogleBloc, GoogleState>(
+              listener: (context, state) {
+                if (state is GoogleLoginSuccess) {
+                  Navigator.pushReplacementNamed(context, '/home');
+                } else if (state is GoogleLoginFail) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.errorMessage),
+                      backgroundColor: Colors.red,
                     ),
-                    Text('Continue with Google', style: FontStyle.moreText),
-                  ],
-                ),
-              ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is GoogleLoginLoading) {
+                  return CircularProgressIndicator();
+                } else {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorsLibrary.shadowColor,
+                          blurRadius: 5,
+                          blurStyle: BlurStyle.normal,
+                        ),
+                      ],
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.read<GoogleBloc>().add(ContinueWithGoogle());
+                      },
+                      child: Wrap(
+                        spacing: 5,
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        runAlignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/google.png',
+                            fit: BoxFit.contain,
+                            width: MediaQuery.of(context).size.width * 0.08,
+                          ),
+                          Text(
+                            'Continue with Google',
+                            style: TextFontStyle.moreText,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
 
             // ~:Registration Option:~
@@ -229,12 +275,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: WrapAlignment.center,
                 runAlignment: WrapAlignment.end,
                 children: [
-                  Text('Don\'t have an account?', style: FontStyle.moreText),
+                  Text(
+                    'Don\'t have an account?',
+                    style: TextFontStyle.moreText,
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacementNamed(context, '/signup');
                     },
-                    child: Text('Sign Up', style: FontStyle.textButton),
+                    child: Text('Sign Up', style: TextFontStyle.textButton),
                   ),
                 ],
               ),
