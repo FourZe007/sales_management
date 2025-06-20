@@ -19,12 +19,6 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
 
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (context) => StateManager(),
-  //     child: const MainApp(),
-  //   ),
-  // );
   runApp(MainApp());
 }
 

@@ -152,15 +152,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               color:
                                   state.currentIndex == index
                                       ? ColorsLibrary.primaryColor1
-                                      : ColorsLibrary.primaryColor2,
+                                      : ColorsLibrary.shadowColor,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 5,
-                                  spreadRadius: 1,
-                                ),
-                              ],
                             ),
                             margin: EdgeInsets.symmetric(
                               vertical: 5.0,

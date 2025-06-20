@@ -205,64 +205,69 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             // ~:Alt Login Option:~
-            BlocConsumer<GoogleBloc, GoogleState>(
-              listener: (context, state) {
-                if (state is GoogleLoginSuccess) {
-                  Navigator.pushReplacementNamed(context, '/home');
-                } else if (state is GoogleLoginFail) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.errorMessage),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state is GoogleLoginLoading) {
-                  return CircularProgressIndicator();
-                } else {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: ColorsLibrary.shadowColor,
-                          blurRadius: 5,
-                          blurStyle: BlurStyle.normal,
+            Container(
+              width: 250,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorsLibrary.shadowColor,
+                    blurRadius: 5,
+                    blurStyle: BlurStyle.normal,
+                  ),
+                ],
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: BlocConsumer<GoogleBloc, GoogleState>(
+                listener: (context, state) {
+                  if (state is GoogleLoginSuccess) {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  } else if (state is GoogleLoginFail) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                  }
+                },
+                builder: (context, state) {
+                  if (state is GoogleLoginLoading) {
+                    return Center(
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+
+                  return GestureDetector(
+                    onTap: () {
+                      context.read<GoogleBloc>().add(ContinueWithGoogle());
+                    },
+                    child: Wrap(
+                      spacing: 5,
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/google.png',
+                          fit: BoxFit.contain,
+                          width: MediaQuery.of(context).size.width * 0.08,
+                        ),
+                        Text(
+                          'Continue with Google',
+                          style: TextFontStyle.moreText,
                         ),
                       ],
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        context.read<GoogleBloc>().add(ContinueWithGoogle());
-                      },
-                      child: Wrap(
-                        spacing: 5,
-                        direction: Axis.horizontal,
-                        alignment: WrapAlignment.center,
-                        runAlignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/google.png',
-                            fit: BoxFit.contain,
-                            width: MediaQuery.of(context).size.width * 0.08,
-                          ),
-                          Text(
-                            'Continue with Google',
-                            style: TextFontStyle.moreText,
-                          ),
-                        ],
-                      ),
-                    ),
                   );
-                }
-              },
+                },
+              ),
             ),
 
             // ~:Registration Option:~
