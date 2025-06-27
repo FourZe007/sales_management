@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sales_management/core/constants/google.dart';
-import 'package:sales_management/data/model/user.dart';
+import 'package:sales_management/data/model/google_user_model.dart';
 import 'package:sales_management/domain/repositories/google_login.dart';
 
 class GoogleLoginRepoImp extends GoogleLoginRepo {
@@ -76,7 +76,8 @@ class GoogleLoginRepoImp extends GoogleLoginRepo {
   }
 
   @override
-  Future<UserModel?> getUserData() async {
+  @override
+  Future<GoogleUserModel?> getUserData() async {
     // Step 1: Get the current user from Firebase Authentication
     final firebaseUser = FirebaseAuth.instance.currentUser;
 
@@ -94,8 +95,8 @@ class GoogleLoginRepoImp extends GoogleLoginRepo {
     final userDoc = await userDocRef.get();
 
     if (userDoc.exists) {
-      // Step 4: Create a UserModel object from Firestore data
-      return UserModel.fromFirestore(userDoc);
+      // Create a GoogleUserModel object from Firestore data
+      return GoogleUserModel.fromFirestore(userDoc);
     } else {
       // ~:User data not found in Firestore:~
       return null;

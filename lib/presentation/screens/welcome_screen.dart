@@ -173,16 +173,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Wrap(
-                  runSpacing: 20,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: Column(
+                  spacing: 40,
                   children: [
                     // ~:Page Topic:~
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        crossAxisAlignment: WrapCrossAlignment.start,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ~:Title:~
                           Text('Figma', style: TextFontStyle.titleRB),
@@ -197,48 +199,64 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
 
                     // ~:Call To Action Buttons:~
-                    Wrap(
-                      runSpacing: 10,
-                      children: [
-                        // ~:Login Button:~
-                        ElevatedButton(
-                          onPressed:
-                              () => Navigator.pushNamed(context, '/login'),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 40),
-                            maximumSize: const Size(double.infinity, 80),
-                            backgroundColor: ColorsLibrary.primaryColor1,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 5,
-                          ),
-                          child: Text(
-                            'Login',
-                            style: TextFontStyle.textfieldPlaceholder,
-                          ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.pushNamed(context, '/login'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 40),
+                        maximumSize: const Size(double.infinity, 80),
+                        backgroundColor: ColorsLibrary.primaryColor1,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-
-                        // ~:Sign Up Button:~
-                        ElevatedButton(
-                          onPressed:
-                              () => Navigator.pushNamed(context, '/login'),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 40),
-                            maximumSize: const Size(double.infinity, 80),
-                            backgroundColor: ColorsLibrary.primaryColor2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            elevation: 5,
-                          ),
-                          child: Text(
-                            'Sign Up',
-                            style: TextFontStyle.textfieldPlaceholder,
-                          ),
-                        ),
-                      ],
+                        elevation: 5,
+                      ),
+                      child: Text(
+                        'Continue',
+                        style: TextFontStyle.textfieldPlaceholder,
+                      ),
                     ),
+                    // Wrap(
+                    //   runSpacing: 10,
+                    //   children: [
+                    //     // ~:Login Button:~
+                    //     ElevatedButton(
+                    //       onPressed:
+                    //           () => Navigator.pushNamed(context, '/login'),
+                    //       style: ElevatedButton.styleFrom(
+                    //         minimumSize: const Size(double.infinity, 40),
+                    //         maximumSize: const Size(double.infinity, 80),
+                    //         backgroundColor: ColorsLibrary.primaryColor1,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(15),
+                    //         ),
+                    //         elevation: 5,
+                    //       ),
+                    //       child: Text(
+                    //         'Login',
+                    //         style: TextFontStyle.textfieldPlaceholder,
+                    //       ),
+                    //     ),
+                    //
+                    //     // ~:Sign Up Button:~
+                    //     ElevatedButton(
+                    //       onPressed:
+                    //           () => Navigator.pushNamed(context, '/signup'),
+                    //       style: ElevatedButton.styleFrom(
+                    //         minimumSize: const Size(double.infinity, 40),
+                    //         maximumSize: const Size(double.infinity, 80),
+                    //         backgroundColor: ColorsLibrary.primaryColor2,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(15),
+                    //         ),
+                    //         elevation: 5,
+                    //       ),
+                    //       child: Text(
+                    //         'Sign Up',
+                    //         style: TextFontStyle.textfieldPlaceholder,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

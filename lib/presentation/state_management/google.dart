@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sales_management/core/constants/google.dart';
-import 'package:sales_management/data/model/user.dart';
+import 'package:sales_management/data/model/google_user_model.dart';
 
 class GAuth {
   // Method to sign in with Google
@@ -73,7 +73,7 @@ class GAuth {
     }
   }
 
-  static Future<UserModel?> getUserData() async {
+  static Future<GoogleUserModel?> getUserData() async {
     // Step 1: Get the current user from Firebase Authentication
     final firebaseUser = FirebaseAuth.instance.currentUser;
 
@@ -92,7 +92,7 @@ class GAuth {
 
     if (userDoc.exists) {
       // Step 4: Create a UserModel object from Firestore data
-      return UserModel.fromFirestore(userDoc);
+      return GoogleUserModel.fromFirestore(userDoc);
     } else {
       // ~:User data not found in Firestore:~
       return null;

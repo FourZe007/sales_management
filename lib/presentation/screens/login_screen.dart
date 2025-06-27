@@ -64,16 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
             if (Platform.isIOS) {
               return IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
               );
             } else {
               return IconButton(
                 icon: const Icon(Icons.arrow_back_rounded, size: 20),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
               );
             }
           },

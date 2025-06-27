@@ -1,4 +1,4 @@
-import 'package:sales_management/data/model/user.dart';
+import 'package:sales_management/data/model/google_user_model.dart';
 import 'package:sales_management/presentation/state_management/base_event.dart';
 
 abstract class GoogleEvent extends BaseEvent {}
@@ -20,13 +20,13 @@ class ContinueWithGoogle extends GoogleEvent {
     this.lastLogin,
   });
 
-  UserModel get props => UserModel(
+  GoogleUserModel get props => GoogleUserModel(
     uid: uid,
     name: username,
     email: email,
     phone: phone,
-    createdAt: createdAt ?? DateTime.now(),
-    lastLogin: lastLogin ?? DateTime.now(),
+    createdAt: createdAt,
+    lastLogin: lastLogin,
   );
 }
 
@@ -47,12 +47,12 @@ class LogoutWithGoogle extends GoogleEvent {
     this.lastLogin,
   });
 
-  UserModel get props => UserModel(
+  GoogleUserModel get props => GoogleUserModel(
     uid: uid,
     name: username,
     email: email,
     phone: phone,
-    createdAt: createdAt ?? DateTime.now(),
-    lastLogin: lastLogin ?? DateTime.now(),
+    createdAt: createdAt,
+    lastLogin: lastLogin,
   );
 }

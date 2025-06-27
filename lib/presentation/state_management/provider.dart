@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sales_management/data/model/user.dart';
+import 'package:sales_management/data/model/google_user_model.dart';
 
 class StateManager extends ChangeNotifier {
-  UserModel user = UserModel(
+  GoogleUserModel user = GoogleUserModel(
     uid: '0',
     name: 'Guest',
     email: '',
@@ -11,9 +11,9 @@ class StateManager extends ChangeNotifier {
     lastLogin: DateTime.now(),
   );
 
-  UserModel get getUser => user;
+  GoogleUserModel get getUser => user;
 
-  void setUser(UserModel value) {
+  void setUser(GoogleUserModel value) {
     user = value;
     notifyListeners();
   }
