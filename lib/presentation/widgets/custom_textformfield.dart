@@ -4,6 +4,7 @@ import 'package:sales_management/core/constants/formatter.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField(
+    this.controller,
     this.hintText,
     this.labelText,
     this.prefixIcon, {
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     super.key,
   });
 
+  final TextEditingController controller;
   final String hintText;
   final String labelText;
   final Icon prefixIcon;
@@ -28,7 +30,6 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController controller = TextEditingController();
 
   // Function to validate email
   String? emailValidation(String? value) {
@@ -75,7 +76,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           autofocus: widget.isAutoFocusEnable,
           inputFormatters: [Formatter.normalFormatter],
           textCapitalization: TextCapitalization.none,
-          controller: controller,
+          controller: widget.controller,
           enabled: true,
           obscureText: widget.isPassword,
           style: TextFontStyle.textfieldPlaceholder,

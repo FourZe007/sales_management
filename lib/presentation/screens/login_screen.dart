@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   // void googleSignIn(StateManager state) async {
   //   await GAuth.signIn().then((value) async {
@@ -128,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           // ~:Username TextField:~
                           CustomTextFormField(
+                            usernameController,
                             'your username',
                             'Username',
                             Icon(Icons.person),
@@ -137,6 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           // ~:Password TextField:~
                           CustomTextFormField(
+                            passwordController,
                             'your password',
                             'Password',
                             Icon(Icons.lock),
